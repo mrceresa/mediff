@@ -1,5 +1,7 @@
 "Largely taken and adapted from https://github.com/lucidrains/video-diffusion-pytorch"
 
+import sys
+sys.path.append("../")
 import math
 import copy
 import torch
