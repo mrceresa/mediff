@@ -1,4 +1,4 @@
 name: BRATS
-root_dir: /data/BraTS/BraTS 2020
+root_dir: /mnt/data/datasets/brats/BraTS2020_TrainingData/
 image_channels: 1
 imgtype: flair

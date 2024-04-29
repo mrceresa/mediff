@@ -1,9 +1,12 @@
 "Adapted from https://github.com/SongweiGe/TATS"
 
 import os
+import sys
+sys.path.append("../")
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from torch.utils.data import DataLoader
+
 from ddpm.diffusion import default
 from vq_gan_3d.model import VQGAN
 from train.callbacks import ImageLogger, VideoLogger
@@ -58,11 +61,12 @@ def run(cfg: DictConfig):
                 log_folder = folder
         if len(log_folder) > 0:
             ckpt_folder = os.path.join(base_dir, log_folder, 'checkpoints')
-            for fn in os.listdir(ckpt_folder):
-                if fn == 'latest_checkpoint.ckpt':
-                    ckpt_file = 'latest_checkpoint_prev.ckpt'
-                    os.rename(os.path.join(ckpt_folder, fn),
-                              os.path.join(ckpt_folder, ckpt_file))
+            if os.path.exists(ckpt_folder):
+                for fn in os.listdir(ckpt_folder):
+                    if fn == 'latest_checkpoint.ckpt':
+                        ckpt_file = 'latest_checkpoint_prev.ckpt'
+                        os.rename(os.path.join(ckpt_folder, fn),
+                                os.path.join(ckpt_folder, ckpt_file))
             if len(ckpt_file) > 0:
                 cfg.model.resume_from_checkpoint = os.path.join(
                     ckpt_folder, ckpt_file)
