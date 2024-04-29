@@ -239,7 +239,7 @@ class VQGAN(pl.LightningModule):
         x = batch['data']  # TODO: batch['stft']
         recon_loss, _, vq_output, perceptual_loss = self.forward(x)
         self.log('val/recon_loss', recon_loss, prog_bar=True)
-        self.log('val/perceptual_loss', perceptual_loss, prog_bar=True)
+        #self.log('val/perceptual_loss', perceptual_loss, prog_bar=True)
         self.log('val/perplexity', vq_output['perplexity'], prog_bar=True)
         self.log('val/commitment_loss',
                  vq_output['commitment_loss'], prog_bar=True)
