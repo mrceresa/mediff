@@ -1,8 +1,13 @@
 from dataset import MRNetDataset, BRATSDataset, ADNIDataset, DUKEDataset, LIDCDataset, DEFAULTDataset
 from torch.utils.data import WeightedRandomSampler
+from omegaconf.dictconfig import DictConfig
 
-
-def get_dataset(cfg):
+def get_dataset(cfg:DictConfig):
+    
+    if not "severity" in cfg.dataset: 
+        severity = "HGG"
+    else:
+        severity = cfg.dataset.severity
     if cfg.dataset.name == 'MRNet':
         train_dataset = MRNetDataset(
             root_dir=cfg.dataset.root_dir, task=cfg.dataset.task, plane=cfg.dataset.plane, split='train')
@@ -13,9 +18,9 @@ def get_dataset(cfg):
         return train_dataset, val_dataset, sampler
     if cfg.dataset.name == 'BRATS':
         train_dataset = BRATSDataset(
-            root_dir=cfg.dataset.root_dir, imgtype=cfg.dataset.imgtype, train=True, severity=cfg.dataset.severity, resize=cfg.dataset.resize)
+            root_dir=cfg.dataset.root_dir, imgtype=cfg.dataset.imgtype, train=True, severity=severity)
         val_dataset = BRATSDataset(
-            root_dir=cfg.dataset.root_dir, imgtype=cfg.dataset.imgtype, train=True, severity=cfg.dataset.severity, resize=cfg.dataset.resize)
+            root_dir=cfg.dataset.root_dir, imgtype=cfg.dataset.imgtype, train=True, severity=severity)
         sampler = None
         return train_dataset, val_dataset, sampler
     if cfg.dataset.name == 'ADNI':
