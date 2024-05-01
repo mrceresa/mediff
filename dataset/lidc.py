@@ -29,3 +29,18 @@ class LIDCDataset(Dataset):
         imageout = imageout.unsqueeze(0)
 
         return {'data': imageout}
+
+if __name__ == "__main__":
+    import pylidc as pl
+
+    print("Converting to npy...")
+
+    # Query for all CT scans with desired traits.
+    scans = pl.query(pl.Scan)
+    print(scans.count())
+
+    for i, scan in enumerate(scans):
+        print(scan.slice_thickness,scan.pixel_spacing )
+    #scans = pl.query(pl.Scan).filter(pl.Scan.slice_thickness <= 1,
+    #                             pl.Scan.pixel_spacing <= 0.6)
+    print(dir(scan))
