@@ -1,6 +1,7 @@
 CUDA_VISIBLE_DEVICES=1 PL_TORCH_DISTRIBUTED_BACKEND=gloo python train_vqgan.py \
     dataset=brats dataset.root_dir=/mnt/data/datasets/brats/BraTS2020_TrainingData/ \
-    model=vq_gan_3d model.gpus=1 \
+    model=vq_gan_3d \
+    model.gpus=1 \
     model.default_root_dir_postfix='flair' \
     model.precision=16 \
     model.embedding_dim=8 \
